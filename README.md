@@ -1,1 +1,1 @@
-# Bazy-danych
+Rozwiązania zadań z Laboratorium 3. 
