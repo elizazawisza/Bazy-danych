@@ -6,7 +6,7 @@ ulubiony_kolor enum('czarny', 'czerwony', 'zielony', 'niebieski', 'biały') )
 create table pracownicy (PESEL char(11), zawod varchar(50), pensja float)
 
 
-  CREATE DEFINER=`root`@`localhost` TRIGGER dodawanie_danych BEFORE INSERT
+  CREATE TRIGGER dodawanie_danych BEFORE INSERT
   		ON
   		ludzie FOR EACH ROW
   	BEGIN
@@ -21,7 +21,7 @@ create table pracownicy (PESEL char(11), zawod varchar(50), pensja float)
   END IF;
   END
 
-  CREATE DEFINER=`root`@`localhost` TRIGGER aktualizacja_ujemne
+  CREATE TRIGGER aktualizacja_ujemne
 BEFORE UPDATE
 ON ludzie FOR EACH ROW
 	BEGIN
