@@ -3,7 +3,7 @@ Wybrałam odpowiednią bazę danych, a następnie w menu na górze strony wybra�
 wybrałam opcję quick, Format sql i kilknęłam przycisk go. 
 Zapisałam wygenerowany plik jako Laboratorium3.sql (został dołączony do githuba).
 Następnie usunęłam azę danych poprzez wejście w opcję OPERATIONS w menu na górze strony i wybrałam opcję Drop Database. 
-By odtworzyć bazę danych ze stworzonego wcześniej backupu, wybrałam opcję IMPRT w menu na górze strony, dołączyłam odpowiedni 
+By odtworzyć bazę danych ze stworzonego wcześniej backupu, wybrałam opcję IMPORT w menu na górze strony, dołączyłam odpowiedni 
 plik zawierający backup mojej bazy danych, a następnie kliknęłam przycisk go. 
 Baza danych została odtworzona z pliku. :) 
 
