@@ -1,0 +1,11 @@
+Do stworzenia Backupu bazy danych używałam narzędzia phpMyAdmin.
+Wybrałam odpowiednią bazę danych, a następnie w menu na górze strony wybrałam opcję EXPORT, po przejściu na odpowiednią stronę 
+wybrałam opcję quick, Format sql i kilknęłam przycisk go. 
+Zapisałam wygenerowany plik jako Laboratorium3.sql (został dołączony do githuba).
+Następnie usunęłam azę danych poprzez wejście w opcję OPERATIONS w menu na górze strony i wybrałam opcję Drop Database. 
+By odtworzyć bazę danych ze stworzonego wcześniej backupu, wybrałam opcję IMPRT w menu na górze strony, dołączyłam odpowiedni 
+plik zawierający backup mojej bazy danych, a następnie kliknęłam przycisk go. 
+Baza danych została odtworzona z pliku. :) 
+
+Backup pełny zawiera całkowitą kopię danych. Natomiast Backup różnicowy zapisuje tylko te dane, które zmieniły się od ostaniego
+backupu całkowitego. 
