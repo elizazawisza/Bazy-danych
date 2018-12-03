@@ -1,4 +1,5 @@
-create index filmy_index on filmy(tytul);
-create index aktorzy_index on aktorzy(nazwisko);
-create index aktorzy1litera_index on aktorzy(imie(1));
-create index aktorzagrali_index on zagrali(actor_id);
+create database `Laboratorium-Filmoteka`;
+create user `244967`@`localhost`;
+  set password for `244967`@`localhost` = password('eliza967')
+  grant select on `Laboratorium-Filmoteka`.* to '244967'@'localhost'
+    grant insert, update on `Laboratorium-Filmoteka`.* to '244967'@'localhost'

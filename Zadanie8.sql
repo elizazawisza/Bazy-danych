@@ -1,17 +1,11 @@
-create table logi(PESEL char(11),stara_pensja float, nowa_pensja float, czas_zmiant datetime, uzytkownik varchar(90))
-
-  create
-  	trigger zad8 after update
-  		on
-  		pracownicy for each row
-  	begin
-  		if new.pensja <> old.pensja then insert
-  			into
-  				`zadanie8`.logi
-  			values(old.PESEL,
-  			old.pensja,
-  			new.pensja,
-  			now(),
-  			current_user());
-  end if;
-  end
+CREATE FUNCTION `Laboratorium-Filmoteka`.zadanie8(lic varchar(30))
+RETURNS INT deterministic
+BEGIN
+	declare wynik int default 0;
+	select avg(gaza) from kontrakty as k join agenci as a on k.agent = a.licencja where lic = a.licencja and k.koniec>CURDATE() into wynik;
+	if wynik=0 then
+	return null;
+	else
+	return wynik;
+end if;
+END

@@ -1,61 +1,11 @@
-CREATE FUNCTION `Laboratorium3`.`Laplace`(a float, b float, x float) RETURNS float
-    DETERMINISTIC
+CREATE FUNCTION `Laboratorium-Filmoteka`.zadanie7(imie VARCHAR(45), nazwisko varchar(45)) returns varchar(120) deterministic
 BEGIN
-	return ((1/(2*b))*exp(-((abs(x-a))/b)));
+declare wynik VARCHAR(120) default '';
+select CONCAT_WS (' ', a.nazwa, datediff(koniec,curdate())) from kontrakty as k join agenci as a on k.agent = a.licencja
+join aktorzy as ak on k.aktor = ak.id where ak.imie = imie and ak.nazwisko = nazwisko into wynik;
+if wynik ='' then set wynik='Niestety nie ma w bazie takiego aktora';
+end if;
+RETURN wynik;
 END
 
-CREATE
-	 PROCEDURE `Laboratorium3`.`Zadanie7`(in nazwa_kolumny varchar(50),
-	nazwa_zawodu varchar(50))
-BEGIN
-	declare epsilon float default 0.05;
-
-declare prywatnosc float;
-
-declare suma float;
-
-declare losowy float;
-
-drop
-	table
-		if exists tabela_prywatnosci;
-
-set
-	@zapytanie_dane = nazwa_zawodu;
-
-set
-	@tresc_zapytania = concat('create temporary table tabela_prywatnosci as (select ', nazwa_kolumny, ' as wartosc , pracownicy.PESEL from ludzie inner join pracownicy on pracownicy.PESEL=ludzie.PESEL
-    where zawod=?);');
-
-prepare zapytanie
-from
-@tresc_zapytania;
-
-execute zapytanie
-	using @zapytanie_dane;
-
-set
-	suma = (
-	select
-		sum(wartosc)
-	from
-		tabela_prywatnosci);
-
-set
-	losowy = (
-	select
-		wartosc
-	from
-		tabela_prywatnosci
-	order by
-		rand()
-	limit 1);
-
-set
-	prywatnosc = Laplace(0,
-	losowy / epsilon,
-	suma);
-
-select
-	suma + prywatnosc;
-END
+select zadanie7('CHRIS', 'DEPP');

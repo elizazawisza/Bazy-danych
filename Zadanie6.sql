@@ -1,69 +1,50 @@
-CREATE PROCEDURE `Laboratorium3`.`Zadanie6`(in budzet float,
-	stanowisko varchar(50))
+CREATE TRIGGER zadanie6
+BEFORE insert
+ON kontrakty FOR EACH ROW
 BEGIN
-	declare czy_wyplacamy int default 1;
-
-declare wyplata float;
-
-declare reszta_budzet float;
-
-declare pesel_pracownika char(11);
-
-declare cursor_pensja cursor for select
-	pensja
-from
-	pracownicy
-where
-	zawod = stanowisko;
-
-declare cursor_pesel cursor for select
-	PESEL
-from
-	pracownicy
-where
-	zawod = stanowisko;
-
-declare continue handler for not found set
-	czy_wyplacamy = 0;
-
-create
-	temporary table
-		wyplaty (PESEL char(11),
-		status enum('Wyplacono') not null);
-
-start transaction;
-
-open cursor_pensja;
-
-open cursor_pesel;
-
-while czy_wyplacamy = 1 do fetch cursor_pensja into
-	wyplata;
-
-set
-	reszta_budzet = budzet-wyplata;
-
-if reszta_budzet <0 then set
-	czy_wyplacamy=0;
-else if czy_wyplacamy=1 then fetch cursor_pesel into
-	pesel_pracownika;
-insert
-	into
-		wyplaty
-	values(concat('********', right(pesel_pracownika, 3)),
-	'Wyplacono' );
+set @gaza = new.gaza;
+set @poczatek = new.poczatek;
+set @koniec = new.koniec;
+if (@gaza<0 or @poczatek>@koniec or @koniec=@poczatek) THEN
+SIGNAL SQLSTATE '45000'
+      SET MESSAGE_TEXT = 'Nie można dodać rekordu, zawiera on nieprawidłowe dane';
 end if;
-end if;
-end while;
-
-commit;
-
-close cursor_pensja;
-
-close cursor_pesel;
-
-select
-	*
-from
-	wyplaty;
 END
+
+CREATE TRIGGER zadanie6a
+BEFORE update
+ON kontrakty FOR EACH ROW
+BEGIN
+set @gaza = new.gaza;
+set @poczatek = new.poczatek;
+set @koniec = new.koniec;
+if (@gaza<0 or @poczatek>@koniec or @koniec=@poczatek) THEN
+SIGNAL SQLSTATE '45000'
+      SET MESSAGE_TEXT = 'Nie można dodać rekordu, zawiera on nieprawidłowe dane';
+end if;
+END
+
+CREATE PROCEDURE `Laboratorium-Filmoteka`.`dodaj30`()
+BEGIN
+declare aktorzyilosc int;
+declare k int default 30;
+declare i int default 0;
+
+select count(id) into aktorzyilosc from aktorzy;
+
+while i < k do insert
+	into
+		kontrakty(agent, aktor, poczatek, koniec, gaza)
+	VALUES ((select agenci.licencja from agenci order by rand() limit 1),
+	(select id from aktorzy order by rand() limit 1) , date_sub(curdate(), interval rand()*(365-50)+50 day)  , date_sub(curdate(),interval rand()*50 day),
+	rand()*(10000-1000)+ 1000);
+set
+	i = i + 1;
+end while;
+END
+
+
+
+
+
+ALTER TABLE kontrakty CHANGE gaza gaza INT( 11 ) COMMENT 'peso argentyńskie na tydzień'
